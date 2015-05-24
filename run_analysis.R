@@ -10,53 +10,53 @@ set_data <- function(name) {
     # Get Subjects
     subj <- read.table(
         paste(name, "/subject_", name, ".txt", sep=""),
-        sep = "", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
+        sep="", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
     )
     
     # Get Activities
     activities <- read.table(
         paste(name, "/y_", name, ".txt", sep=""),
-        sep = "", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
+        sep="", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
     )
     
     # Get Full Data Set
     ds <- read.table(
         paste(name, "/X_", name, ".txt", sep=""),
-        sep = "", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
+        sep="", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
     )
 
     # Define Subset Of Full Data Set Using Only Columns Desired
-    sub_ds = ds[,cols]
+    sub_ds <- ds[,cols]
     
     # Set Descriptive Column Names For Each Varaible
-    names(sub_ds) = colnames
+    names(sub_ds) <- colnames
 
     # Add Extra Columns To Data Set, With Descriptive Variable Names
-    sub_ds$Subject = sprintf("Subj%02d", subj[,1])
-    sub_ds$Activity = activities[,1]
+    sub_ds$Subject <- sprintf("Subj%02d", subj[,1])
+    sub_ds$Activity <- activities[,1]
     
     return(sub_ds)
 }
 
 # Get Activity Types
-acts = read.table(
-    "activity_labels.txt", sep = "", header=FALSE,
-    row.names = 1, stringsAsFactors=FALSE
+acts <- read.table(
+    "activity_labels.txt", sep="", header=FALSE,
+    row.names=1, stringsAsFactors=FALSE
 )
 
 # Get Data-Set Features
-feats = read.table(
-    "features.txt", sep = "", header=FALSE,
+feats <- read.table(
+    "features.txt", sep="", header=FALSE,
     stringsAsFactors=FALSE
 )
 
 # Get All Mean And Standard Deviation Columns
-cols = feats[ grep("[Mm]ean|std", feats$V2), ][[1]]
-oldnames = feats[ grep("[Mm]ean|std", feats$V2), ][[2]]
+cols <- feats[grep("[Mm]ean|std", feats$V2),][[1]]
+oldnames <- feats[grep("[Mm]ean|std", feats$V2),][[2]]
 
 # Define Map Of Old Column Names To More Descriptive Column Names
-colmap = data.frame(
-    "old" = c(
+colmap <- data.frame(
+    "old"=c(
         "tBodyAcc-mean()-X",
         "tBodyAcc-mean()-Y",
         "tBodyAcc-mean()-Z",
@@ -144,7 +144,7 @@ colmap = data.frame(
         "angle(Y,gravityMean)",
         "angle(Z,gravityMean)"
     ),
-    "new" = c(
+    "new"=c(
         "TimeBodyAccelMean_X",
         "TimeBodyAccelMean_Y",
         "TimeBodyAccelMean_Z",
@@ -236,31 +236,31 @@ colmap = data.frame(
 )
 
 # From The List Of Old Column Names, Define The New Columns
-colnames = c()
+colnames <- c()
 for (cn in oldnames) {
     # Ensure That If A New Column Name Is Not Found
     # That We Keep The Original Column Name
-    lookup = colmap[colmap$old == cn, "new"]
+    lookup <- colmap[colmap$old == cn, "new"]
     if (length(lookup) == 0) {
-        lookup = cn
+        lookup <- cn
     }
-    colnames = rbind(colnames, lookup)
+    colnames <- rbind(colnames, lookup)
 }
 
 # Get Combined Data Set
-merged = set_data("test")
-merged = rbind(merged, set_data("train"))
+merged <- set_data("test")
+merged <- rbind(merged, set_data("train"))
 
 # Make Activity Column More Descriptive
-merged[,"Activity"] = acts[merged[,"Activity"],]
+merged[,"Activity"] <- acts[merged[,"Activity"],]
 
 # Prepare A Summary Data Frame By Populating The Activities And Subjects
-t = dcast(merged, Activity ~ Subject,length,value.var = "Activity")
-summ = melt(t,id=c("Activity"))
+t <- dcast(merged, Activity ~ Subject, length, value.var="Activity")
+summ <- melt(t, id=c("Activity"))
 
 # Remove and Rename Columns To Accomodate A Descriptive Data Set
-names(summ)[names(summ) == "variable"] = "Subject"
-summ$value = NULL
+names(summ)[names(summ) == "variable"] <- "Subject"
+summ$value <- NULL
 
 # Summarize The Data By Each Data Variable For Each Subject And Activity
 for (cn in names(merged)) {
@@ -270,14 +270,14 @@ for (cn in names(merged)) {
     }
 
     # Summarize The Variable Into A Mean By Activity and Subject
-    t = dcast(merged, Activity ~ Subject, mean, value.var = cn, na.exclude=TRUE)
-    rownames(t) = t$Activity
+    t <- dcast(merged, Activity ~ Subject, mean, value.var=cn, na.exclude=TRUE)
+    rownames(t) <- t$Activity
 
     # Now Extract The Summarized Data An Populate The Summary Data Set With It
     # Prepend "Mean" To Variable Name So Tidying Activity Is Transparent
     for (s in grep("^Subj[0-9]", sort(names(t)), value=TRUE)) {
         for (a in sort(t$Activity)) {
-            summ[summ$Activity == a & summ$Subject == s, sprintf("Mean%s",cn)] = t[t$Activity == a, s]
+            summ[summ$Activity == a & summ$Subject == s, sprintf("Mean%s",cn)] <- t[t$Activity == a, s]
         }
     }
 }
