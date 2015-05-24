@@ -13,7 +13,8 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 This codebook augments the field data described in "features_info.txt" from the
 original data set.
 
-This data is tidy in that each column represents a single variable: one activityand one subject, and one measurement per column.
+This data is tidy in that each column represents a single variable: one activity
+and one subject, and one measurement per column.
 
 Field Descriptions
 ------------------
