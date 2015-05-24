@@ -10,6 +10,11 @@ http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartpho
 The original data set is here:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
+This codebook augments the field data described in "features_info.txt" from the
+original data set.
+
+This data is tidy in that each column represents a single variable: one activityand one subject, and one measurement per column.
+
 Field Descriptions
 ------------------
 
@@ -19,9 +24,11 @@ The activity the subject is engaged in.
 **Subject**
 The person who is engaged in the activity. The subject number was prefixed with "Subj" and padded with zeroes to facilitate sorting and differentiate the numeric data as a subject identifier.
 
-The remaining columns have been tidied by taking the mean of the measurements taken for each activity and subject for columns identified as having a mean or standard deviation. The mapping below shows the original name based on "features_info.txt" and "features.txt" prior to being summarized with a mean.
+The remaining columns have been summarized by taking the mean of the measurements taken for each activity and subject, just for variables identified as having a mean or standard deviation. The mapping below shows the original name based on "features_info.txt" and "features.txt" prior to being summarized with a mean.
 
 The column names were modified based on heuristics outlined in the accompanying README file.
+
+The units for each variable remain the same as they are the mean of the original values.
 
 *From "features_info.txt": "time domain signals (prefix 't' to denote time) were
 captured at a constant rate of 50 Hz"*  
