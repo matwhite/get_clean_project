@@ -4,10 +4,10 @@ Codebook For Human Activity Recognition
 This is the codebook describing the variables used in the output of the Getting
 and Cleaning Data course project concerning Human Activity Recognition.
 
-Full documentation about these data is available at
+Full documentation about the original data set is available at:
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
 
-The original data set is here
+The original data set is here:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
 Field Descriptions
@@ -19,7 +19,7 @@ The activity the subject is engaged in
 **Subject**
 The person who is engaged in the activity
 
-The remaining columns have been tidied by taking the mean of the measurements taken for each activity and subject for columns identified as having a mean or standard deviation. The mapping below showing the original name based on "features_info.txt" and "features.txt" prior to being summarized with a mean.
+The remaining columns have been tidied by taking the mean of the measurements taken for each activity and subject for columns identified as having a mean or standard deviation. The mapping below shows the original name based on "features_info.txt" and "features.txt" prior to being summarized with a mean.
 
 The column names were modified based on heuristics outlined in the accompanying README file.
 

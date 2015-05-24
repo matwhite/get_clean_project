@@ -255,12 +255,13 @@ merged = rbind(merged, set_data("train"))
 merged[,"Activity"] = acts[merged[,"Activity"],]
 
 # Prepare A Summary Data Frame By Populating The Activities And Subjects
-# Remove and Rename Columns To Accomodate A Descriptive Data Set
 t = dcast(merged, Activity ~ Subject,length,value.var = "Activity")
 summ = melt(t,id=c("Activity"))
+# Remove and Rename Columns To Accomodate A Descriptive Data Set
 names(summ)[names(summ) == "variable"] = "Subject"
 summ$value = NULL
 
+# Summarize The Data By Each Data Variable For Each Subject And Activity
 for (cn in names(merged)) {
     if (cn == "Subject" || cn == "Activity") {
         next
