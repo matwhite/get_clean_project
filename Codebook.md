@@ -14,7 +14,7 @@ Field Descriptions
 ------------------
 
 **Activity**
-The activity the subject is engaged in
+The activity the subject is engaged in.
 
 **Subject**
 The person who is engaged in the activity. The subject number was prefixed with "Subj" and padded with zeroes to facilitate sorting and differentiate the numeric data as a subject identifier.
