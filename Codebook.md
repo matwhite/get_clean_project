@@ -23,6 +23,8 @@ The remaining columns have been tidied by taking the mean of the measurements ta
 
 The column names were modified based on heuristics outlined in the accompanying README file.
 
+*From "features_info.txt": "time domain signals (prefix 't' to denote time) were
+captured at a constant rate of 50 Hz"*  
 **MeanTimeBodyAccelMean_X**                    tBodyAcc-mean()-X  
 **MeanTimeBodyAccelMean_Y**                    tBodyAcc-mean()-Y  
 **MeanTimeBodyAccelMean_Z**                    tBodyAcc-mean()-Z  
@@ -53,6 +55,8 @@ The column names were modified based on heuristics outlined in the accompanying 
 **MeanTimeBodyGryoJerkStdev_X**                tBodyGyroJerk-std()-X  
 **MeanTimeBodyGryoJerkStdev_Y**                tBodyGyroJerk-std()-Y  
 **MeanTimeBodyGryoJerkStdev_Z**                tBodyGyroJerk-std()-Z  
+
+*From "features_info.txt": "the magnitude of these three-dimensional signals were calculated using the Euclidean norm"*  
 **MeanTimeBodyAccelMagniMean**                   tBodyAccMag-mean()  
 **MeanTimeBodyAccelMagniStdev**                    tBodyAccMag-std()  
 **MeanTimeGravityAccelMagniMean**                tGravityAccMag-mean()  
@@ -63,6 +67,8 @@ The column names were modified based on heuristics outlined in the accompanying 
 **MeanTimeBodyGyroMagniStdev**                   tBodyGyroMag-std()  
 **MeanTimeBodyGyroJerkMagniMean**              tBodyGyroJerkMag-mean()  
 **MeanTimeBodyGryoJerkMagniStdev**               tBodyGyroJerkMag-std()  
+
+*From "features_info.txt": "a Fast Fourier Transform (FFT) was applied to some of these signals"*  
 **MeanFreqBodyAccelMean_X**                    fBodyAcc-mean()-X  
 **MeanFreqBodyAccelMean_Y**                    fBodyAcc-mean()-Y  
 **MeanFreqBodyAccelMean_Z**                    fBodyAcc-mean()-Z  
@@ -90,6 +96,8 @@ The column names were modified based on heuristics outlined in the accompanying 
 **MeanFreqBodyGryoMeanFreq_X**               fBodyGyro-meanFreq()-X  
 **MeanFreqBodyGryoMeanFreq_Y**               fBodyGyro-meanFreq()-Y  
 **MeanFreqBodyGryoMeanFreq_Z**               fBodyGyro-meanFreq()-Z  
+
+*From "features_info.txt": "the magnitude of these three-dimensional signals were calculated using the Euclidean norm"*  
 **MeanFreqBodyAccelMagniMean**                   fBodyAccMag-mean()  
 **MeanFreqBodyAccelMagniStdev**                    fBodyAccMag-std()  
 **MeanFreqBodyAccelMagniMeanFreq**               fBodyAccMag-meanFreq()  
@@ -102,13 +110,12 @@ The column names were modified based on heuristics outlined in the accompanying 
 **MeanFreqBodyGyroJerkMagniMean**          fBodyBodyGyroJerkMag-mean()  
 **MeanFreqBodyGyroJerkMagniStdev**           fBodyBodyGyroJerkMag-std()  
 **MeanFreqBodyGyroJerkMagniMeanFreq**      fBodyBodyGyroJerkMag-meanFreq()  
-**MeanAngleTimeBodyAccelMeanGravity**          angle(tBodyAccMean,gravity)  
 
-"averaging the signals in a signal window sample"
+*From "features_info.txt": "averaging the signals in a signal window sample"*  
+**MeanAngleTimeBodyAccelMeanGravity**          angle(tBodyAccMean,gravity)  
 **MeanAngleTimeBodyAccelJerkMeanGravityMean** angle(tBodyAccJerkMean),gravityMean)  
 **MeanAngleTimeBodyGyroMeanGravityMean**     angle(tBodyGyroMean,gravityMean)  
 **MeanAngleTimeBodyGyroJerkMeanGravityMean** angle(tBodyGyroJerkMean,gravityMean)  
 **MeanAngleGravityMean_X**                 angle(X,gravityMean)  
 **MeanAngleGravityMean_Y**                 angle(Y,gravityMean)  
 **MeanAngleGravityMean_Z**                 angle(Z,gravityMean)  
-

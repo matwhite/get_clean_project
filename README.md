@@ -5,7 +5,7 @@ This project utilizes data generated from acceleration and gyroscope sensors
 worn by a group of 30 subjects as they perform six discrete activities:
 walking, walking upstairs, walking downstairs, sitting, standing, or laying.
 
-Full information about the data are available here:
+Full information about the data is available here:
 http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
 The final data set is the average of all variables marked as being a "mean" or
@@ -52,11 +52,11 @@ Column Re-Naming Convention
 
 The columns were renamed to be more human-readable. For instance, Certain shorthand notations were lengthened based on the documentation that came with the data set:
 
-t: Time  
-std: Stdev  
-acc: Accel  
-f: Freq  
-mag: Magni  
+**t:** Time  
+**std:** Stdev  
+**acc:** Accel  
+**f:** Freq  
+**mag:** Magni  
 
 Camel case was used as it is a highly conventional way of presenting variable names.
 
