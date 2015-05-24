@@ -17,7 +17,7 @@ Field Descriptions
 The activity the subject is engaged in
 
 **Subject**
-The person who is engaged in the activity
+The person who is engaged in the activity. The subject number was prefixed with "Subj" and padded with zeroes to facilitate sorting and differentiate the numeric data as a subject identifier.
 
 The remaining columns have been tidied by taking the mean of the measurements taken for each activity and subject for columns identified as having a mean or standard deviation. The mapping below shows the original name based on "features_info.txt" and "features.txt" prior to being summarized with a mean.
 
