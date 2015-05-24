@@ -257,21 +257,24 @@ merged[,"Activity"] = acts[merged[,"Activity"],]
 # Prepare A Summary Data Frame By Populating The Activities And Subjects
 t = dcast(merged, Activity ~ Subject,length,value.var = "Activity")
 summ = melt(t,id=c("Activity"))
+
 # Remove and Rename Columns To Accomodate A Descriptive Data Set
 names(summ)[names(summ) == "variable"] = "Subject"
 summ$value = NULL
 
 # Summarize The Data By Each Data Variable For Each Subject And Activity
 for (cn in names(merged)) {
+    # Only Operate On Data Variables
     if (cn == "Subject" || cn == "Activity") {
         next
     }
 
     # Summarize The Variable Into A Mean By Activity and Subject
-    t = dcast(merged, Activity ~ Subject,mean,value.var = cn,na.exclude=TRUE)
+    t = dcast(merged, Activity ~ Subject, mean, value.var = cn, na.exclude=TRUE)
     rownames(t) = t$Activity
 
     # Now Extract The Summarized Data An Populate The Summary Data Set With It
+    # Prepend "Mean" To Variable Name So Tidying Activity Is Transparent
     for (s in grep("^Subj[0-9]", sort(names(t)), value=TRUE)) {
         for (a in sort(t$Activity)) {
             summ[summ$Activity == a & summ$Subject == s, sprintf("Mean%s",cn)] = t[t$Activity == a, s]
