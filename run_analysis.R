@@ -1,42 +1,42 @@
 # Load Needed Libraries
 library(plyr)
 library(reshape2)
+
+# Clear All Variables In The Environment
 rm(list=ls())
 
+# Function For Merging and Manipulating The Testing and Training Data Sets
 set_data <- function(name) {
     # Get Subjects
-    subj = read.table(
+    subj <- read.table(
         paste(name, "/subject_", name, ".txt", sep=""),
         sep = "", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
     )
     
     # Get Activities
-    activities = read.table(
+    activities <- read.table(
         paste(name, "/y_", name, ".txt", sep=""),
         sep = "", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
     )
     
     # Get Full Data Set
-    subds = read.table(
+    ds <- read.table(
         paste(name, "/X_", name, ".txt", sep=""),
         sep = "", header=FALSE, row.names=NULL, stringsAsFactors=FALSE
     )
 
-    # Define Subset Of Full Data Set
-    ds = subds[,cols]
+    # Define Subset Of Full Data Set Using Only Columns Desired
+    sub_ds = ds[,cols]
     
-    # Set Descriptive Varaible Names For Data Set
-    names(ds) = colnames
+    # Set Descriptive Column Names For Each Varaible
+    names(sub_ds) = colnames
 
     # Add Extra Columns To Data Set, With Descriptive Variable Names
-    ds$Subject = sprintf("Subj%02d", subj[,1])
-    ds$Activity = activities[,1]
+    sub_ds$Subject = sprintf("Subj%02d", subj[,1])
+    sub_ds$Activity = activities[,1]
     
-    return(ds)
+    return(sub_ds)
 }
-
-# Set Directory To Data Storage Area
-setwd("/mnt/home/innards/education/getextract/proj/UCI")
 
 # Get Activity Types
 acts = read.table(
@@ -53,6 +53,8 @@ feats = read.table(
 # Get All Mean And Standard Deviation Columns
 cols = feats[ grep("[Mm]ean|std", feats$V2), ][[1]]
 oldnames = feats[ grep("[Mm]ean|std", feats$V2), ][[2]]
+
+# Define Map Of Old Column Names To More Descriptive Column Names
 colmap = data.frame(
     "old" = c(
         "tBodyAcc-mean()-X",
@@ -232,8 +234,12 @@ colmap = data.frame(
     ),
     stringsAsFactors=FALSE
 )
+
+# From The List Of Old Column Names, Define The New Columns
 colnames = c()
 for (cn in oldnames) {
+    # Ensure That If A New Column Name Is Not Found
+    # That We Keep The Original Column Name
     lookup = colmap[colmap$old == cn, "new"]
     if (length(lookup) == 0) {
         lookup = cn
@@ -245,46 +251,32 @@ for (cn in oldnames) {
 merged = set_data("test")
 merged = rbind(merged, set_data("train"))
 
-# Make Activity Column Descriptive
+# Make Activity Column More Descriptive
 merged[,"Activity"] = acts[merged[,"Activity"],]
 
-# Generate Summarized Data Set
-#summ = merged[0,]
-#summ = data.frame(rows=180, cols=88)
-#names(summ) = names(merged)
-
 # Prepare A Summary Data Frame By Populating The Activities And Subjects
+# Remove and Rename Columns To Accomodate A Descriptive Data Set
 t = dcast(merged, Activity ~ Subject,length,value.var = "Activity")
 summ = melt(t,id=c("Activity"))
 names(summ)[names(summ) == "variable"] = "Subject"
-#for (n in names(summ)) {
-#    names(summ)[names(summ) == n] = sprintf("Mean%s", n)
-#}
 summ$value = NULL
-#set(summ,j = 'value', value = NULL)
-#for (s in grep("^S[0-9]", sort(names(t)))) {
- #   for (a in sort(t$Activity)) {
-#        summ = rbind(summ,c())
+
 for (cn in names(merged)) {
     if (cn == "Subject" || cn == "Activity") {
         next
     }
-    print(cn)
+
+    # Summarize The Variable Into A Mean By Activity and Subject
     t = dcast(merged, Activity ~ Subject,mean,value.var = cn,na.exclude=TRUE)
-    #summ$cn = 1:180
     rownames(t) = t$Activity
-    #ts = matrix(nrow = 0, ncol = 3)
-    #names(ts) = c("Activity", "Subject", cn)
+
+    # Now Extract The Summarized Data An Populate The Summary Data Set With It
     for (s in grep("^Subj[0-9]", sort(names(t)), value=TRUE)) {
         for (a in sort(t$Activity)) {
-            print(paste("cn:",cn," A:",a," S:",s," V:",t[t$Activity == a, s]))
             summ[summ$Activity == a & summ$Subject == s, sprintf("Mean%s",cn)] = t[t$Activity == a, s]
-            
-            #ts = rbind(ts, c(a, s, t[t$Activity == a, s]))
         }
     }
-    #print(ts)
-    #merge(summ,ts, by=c("Activity", "Subject"))
-    #summ = rbind(summ, ts)
 }
+
+# Write The Output Of The Summarized Data Set To A File
 write.table(summ, "step5.txt", row.name=FALSE)
